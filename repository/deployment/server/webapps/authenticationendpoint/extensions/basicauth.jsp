@@ -308,7 +308,7 @@
 
     <div class="buttons">
         <% if (isRecoveryEPAvailable) { %>
-<%--        <div class="field">--%>
+        <div class="field">
 <%--            <%=AuthenticationEndpointUtil.i18n(resourceBundle, "forgot.username.password")%>--%>
 <%--            <% if (!isIdentifierFirstLogin(inputType)) { %>--%>
 <%--            <a--%>
@@ -321,16 +321,16 @@
 <%--            </a>--%>
 <%--            <%=AuthenticationEndpointUtil.i18n(resourceBundle, "forgot.username.password.or")%>--%>
 <%--            <% } %>--%>
-<%--            <a--%>
-<%--                id="passwordRecoverLink"--%>
-<%--                tabindex="6"--%>
-<%--                href="<%=StringEscapeUtils.escapeHtml4(getRecoverAccountUrl(identityMgtEndpointContext, urlEncodedURL, false, urlParameters))%>"--%>
-<%--                data-testid="login-page-password-recovery-button"--%>
-<%--            >--%>
-<%--                <%=AuthenticationEndpointUtil.i18n(resourceBundle, "forgot.password")%>--%>
-<%--            </a>--%>
-<%--            ?--%>
-<%--        </div>--%>
+            <a
+                id="passwordRecoverLink"
+                tabindex="6"
+                href="<%=StringEscapeUtils.escapeHtml4(getRecoverAccountUrl(identityMgtEndpointContext, urlEncodedURL, false, urlParameters))%>"
+                data-testid="login-page-password-recovery-button"
+            >
+                <%=AuthenticationEndpointUtil.i18n(resourceBundle, "forgot.password")%>
+            </a>
+            ?
+        </div>
         <% } %>
 
         <% if (isIdentifierFirstLogin(inputType)) { %>
