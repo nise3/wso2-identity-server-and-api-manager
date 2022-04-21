@@ -393,6 +393,16 @@
         </div>
         <div class="column mobile center aligned tablet right aligned computer right aligned buttons tablet no-margin-right-last-child computer no-margin-right-last-child">
             <button
+                    type="button"
+                    onclick="window.location.href='<%=getCdapUrl()%>';"
+                    class="ui large button link-button"
+                    tabindex="8"
+                    role="button"
+                    data-testid="login-page-cdap-login-button"
+            >
+                <%=StringEscapeUtils.escapeHtml4(AuthenticationEndpointUtil.i18n(resourceBundle, "login.cdap"))%>
+            </button>
+            <button
                 type="submit"
                 class="ui primary large button"
                 tabindex="4"
@@ -418,6 +428,11 @@
 
             return identityMgtEndpointContext + ACCOUNT_RECOVERY_ENDPOINT_REGISTER + "?"
                     + urlParameters + "&callback=" + Encode.forHtmlAttribute(urlEncodedURL);
+        }
+
+        private String getCdapUrl() {
+
+            return "https://identity-dev.nise3.xyz/oauth2/authorize/?response_type=id_token token&client_id=ATqvU8EKNKl6st6YjuUM0VNbQ1oa&scope=openid profile email&nonce=13e2312637dg136e1&redirect_uri=https://dev.nise3.xyz/callback";
         }
 
     %>
