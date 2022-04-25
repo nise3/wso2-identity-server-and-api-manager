@@ -21,7 +21,8 @@
 <%@ page import="org.apache.cxf.jaxrs.client.WebClient" %>
 <%@ page import="org.apache.http.HttpStatus" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="org.wso2.carbon.identity.application.authentication.endpoint.util.client.SelfUserRegistrationResource" %>
+<%@ page
+        import="org.wso2.carbon.identity.application.authentication.endpoint.util.client.SelfUserRegistrationResource" %>
 <%@ page import="org.wso2.carbon.identity.application.authentication.endpoint.util.AuthenticationEndpointUtil" %>
 <%@ page import="org.wso2.carbon.identity.application.authentication.endpoint.util.bean.ResendCodeRequestDTO" %>
 <%@ page import="org.wso2.carbon.identity.application.authentication.endpoint.util.bean.UserDTO" %>
@@ -46,9 +47,9 @@
     }
 
     // Handle form submission preventing double submission.
-    $(document).ready(function(){
-        $.fn.preventDoubleSubmission = function() {
-            $(this).on('submit',function(e){
+    $(document).ready(function () {
+        $.fn.preventDoubleSubmission = function () {
+            $(this).on('submit', function (e) {
                 var $form = $(this);
                 if ($form.data('submitted') === true) {
                     // Previously submitted - don't submit again.
@@ -91,9 +92,9 @@
 
     function showResendReCaptcha() {
         <% if (reCaptchaResendEnabled) { %>
-            window.location.href="resend-confirmation-captcha.jsp?<%=AuthenticationEndpointUtil.cleanErrorMessages(Encode.forJava(request.getQueryString()))%>";
+        window.location.href = "resend-confirmation-captcha.jsp?<%=AuthenticationEndpointUtil.cleanErrorMessages(Encode.forJava(request.getQueryString()))%>";
         <% } else { %>
-            window.location.href="login.do?resend_username=<%=Encode.forHtml(request.getParameter("failedUsername"))%>&<%=AuthenticationEndpointUtil.cleanErrorMessages(Encode.forJava(request.getQueryString()))%>";
+        window.location.href = "login.do?resend_username=<%=Encode.forHtml(request.getParameter("failedUsername"))%>&<%=AuthenticationEndpointUtil.cleanErrorMessages(Encode.forJava(request.getQueryString()))%>";
         <% } %>
     }
 </script>
@@ -149,16 +150,16 @@
         WebClient.client(selfUserRegistrationResource).header("g-recaptcha-response", reCaptchaResponse);
         WebClient.client(selfUserRegistrationResource).header("Authorization", header);
         Response selfRegistrationResponse = selfUserRegistrationResource.regenerateCode(selfRegistrationRequest);
-        if (selfRegistrationResponse != null &&  selfRegistrationResponse.getStatus() == HttpStatus.SC_CREATED) {
+        if (selfRegistrationResponse != null && selfRegistrationResponse.getStatus() == HttpStatus.SC_CREATED) {
 %>
 <div class="ui visible positive message">
-    <%=AuthenticationEndpointUtil.i18n(resourceBundle,Constants.ACCOUNT_RESEND_SUCCESS_RESOURCE)%>
+    <%=AuthenticationEndpointUtil.i18n(resourceBundle, Constants.ACCOUNT_RESEND_SUCCESS_RESOURCE)%>
 </div>
 <%
 } else {
 %>
 <div class="ui visible negative message">
-    <%=AuthenticationEndpointUtil.i18n(resourceBundle,Constants.ACCOUNT_RESEND_FAIL_RESOURCE)%>
+    <%=AuthenticationEndpointUtil.i18n(resourceBundle, Constants.ACCOUNT_RESEND_FAIL_RESOURCE)%>
 </div>
 <%
         }
@@ -169,30 +170,31 @@
 <div class="ui visible negative message" id="error-msg" data-testid="login-page-error-message">
     <%= AuthenticationEndpointUtil.i18n(resourceBundle, errorMessage) %>
 </div>
-<% } else if ((Boolean.TRUE.toString()).equals(request.getParameter("authz_failure"))){%>
+<% } else if ((Boolean.TRUE.toString()).equals(request.getParameter("authz_failure"))) {%>
 <div class="ui visible negative message" id="error-msg" data-testid="login-page-error-message">
     <%=AuthenticationEndpointUtil.i18n(resourceBundle, "unauthorized.to.login")%>
 </div>
 <% } else { %>
-    <div class="ui visible negative message" style="display: none;" id="error-msg" data-testid="login-page-error-message"></div>
+<div class="ui visible negative message" style="display: none;" id="error-msg"
+     data-testid="login-page-error-message"></div>
 <% } %>
 
 <% if (Boolean.parseBoolean(loginFailed) && errorCode.equals(IdentityCoreConstants.USER_ACCOUNT_NOT_CONFIRMED_ERROR_CODE) && request.getParameter("resend_username") == null) { %>
-    <div class="ui visible warning message" id="error-msg" data-testid="login-page-error-message">
-        <%= AuthenticationEndpointUtil.i18n(resourceBundle, errorMessage) %>
+<div class="ui visible warning message" id="error-msg" data-testid="login-page-error-message">
+    <%= AuthenticationEndpointUtil.i18n(resourceBundle, errorMessage) %>
 
-        <div class="ui divider hidden"></div>
-
-        <%=AuthenticationEndpointUtil.i18n(resourceBundle, "no.confirmation.mail")%>
-
-        <a id="registerLink"
-            href="javascript:showResendReCaptcha();"
-            data-testid="login-page-resend-confirmation-email-link"
-        >
-            <%=StringEscapeUtils.escapeHtml4(AuthenticationEndpointUtil.i18n(resourceBundle, "resend.mail"))%>
-        </a>
-    </div>
     <div class="ui divider hidden"></div>
+
+    <%=AuthenticationEndpointUtil.i18n(resourceBundle, "no.confirmation.mail")%>
+
+    <a id="registerLink"
+       href="javascript:showResendReCaptcha();"
+       data-testid="login-page-resend-confirmation-email-link"
+    >
+        <%=StringEscapeUtils.escapeHtml4(AuthenticationEndpointUtil.i18n(resourceBundle, "resend.mail"))%>
+    </a>
+</div>
+<div class="ui divider hidden"></div>
 <% } %>
 
 <form class="ui large form" action="<%=loginFormActionURL%>" method="post" id="loginForm">
@@ -204,16 +206,16 @@
         }
     %>
 
-    <% if(Boolean.parseBoolean(request.getParameter("passwordReset"))) {
+    <% if (Boolean.parseBoolean(request.getParameter("passwordReset"))) {
     %>
-        <div class="ui visible positive message" data-testid="password-reset-success-message">
-            <%=AuthenticationEndpointUtil.i18n(resourceBundle, "Updated.the.password.successfully")%>
-        </div>
-   <% } %>
+    <div class="ui visible positive message" data-testid="password-reset-success-message">
+        <%=AuthenticationEndpointUtil.i18n(resourceBundle, "Updated.the.password.successfully")%>
+    </div>
+    <% } %>
     <% if (!isIdentifierFirstLogin(inputType)) { %>
-        <div class="field">
-            <div class="ui fluid left icon input">
-                <input
+    <div class="field">
+        <div class="ui fluid left icon input">
+            <input
                     type="text"
                     id="usernameUserInput"
                     value=""
@@ -222,16 +224,16 @@
                     placeholder="<%=AuthenticationEndpointUtil.i18n(resourceBundle, "username")%>"
                     data-testid="login-page-username-input"
                     required>
-                <i aria-hidden="true" class="user icon"></i>
-                <input id="username" name="username" type="hidden" value="<%=username%>">
-            </div>
+            <i aria-hidden="true" class="user icon"></i>
+            <input id="username" name="username" type="hidden" value="<%=username%>">
         </div>
+    </div>
     <% } else { %>
-        <input id="username" name="username" type="hidden" data-testid="login-page-username-input" value="<%=username%>">
+    <input id="username" name="username" type="hidden" data-testid="login-page-username-input" value="<%=username%>">
     <% } %>
-        <div class="field">
-            <div class="ui fluid left icon input">
-                <input
+    <div class="field">
+        <div class="ui fluid left icon input">
+            <input
                     type="password"
                     id="password"
                     name="password"
@@ -240,20 +242,20 @@
                     tabindex="2"
                     placeholder="<%=AuthenticationEndpointUtil.i18n(resourceBundle, "password")%>"
                     data-testid="login-page-password-input"
-                >
-                <i aria-hidden="true" class="lock icon"></i>
-            </div>
+            >
+            <i aria-hidden="true" class="lock icon"></i>
         </div>
+    </div>
     <%
         if (reCaptchaEnabled) {
     %>
-        <div class="field">
-            <div class="g-recaptcha"
-                data-sitekey="<%=Encode.forHtmlContent(request.getParameter("reCaptchaKey"))%>"
-                data-testid="login-page-g-recaptcha"
-            >
-            </div>
+    <div class="field">
+        <div class="g-recaptcha"
+             data-sitekey="<%=Encode.forHtmlContent(request.getParameter("reCaptchaKey"))%>"
+             data-testid="login-page-g-recaptcha"
+        >
         </div>
+    </div>
     <%
         }
     %>
@@ -285,7 +287,7 @@
             int serverPort = request.getServerPort();
             String uri = (String) request.getAttribute(JAVAX_SERVLET_FORWARD_REQUEST_URI);
             String prmstr = URLDecoder.decode(((String) request.getAttribute(JAVAX_SERVLET_FORWARD_QUERY_STRING)), UTF_8);
-            String urlWithoutEncoding = scheme + "://" +serverName + ":" + serverPort + uri + "?" + prmstr;
+            String urlWithoutEncoding = scheme + "://" + serverName + ":" + serverPort + uri + "?" + prmstr;
 
             urlEncodedURL = URLEncoder.encode(urlWithoutEncoding, UTF_8);
             urlParameters = prmstr;
@@ -309,23 +311,23 @@
     <div class="buttons">
         <% if (isRecoveryEPAvailable) { %>
         <div class="field">
-<%--            <%=AuthenticationEndpointUtil.i18n(resourceBundle, "forgot.username.password")%>--%>
-<%--            <% if (!isIdentifierFirstLogin(inputType)) { %>--%>
-<%--            <a--%>
-<%--                id="usernameRecoverLink"--%>
-<%--                tabindex="5"--%>
-<%--                href="<%=StringEscapeUtils.escapeHtml4(getRecoverAccountUrl(identityMgtEndpointContext, urlEncodedURL, true, urlParameters))%>"--%>
-<%--                data-testid="login-page-username-recovery-button"--%>
-<%--            >--%>
-<%--                <%=AuthenticationEndpointUtil.i18n(resourceBundle, "forgot.username")%>--%>
-<%--            </a>--%>
-<%--            <%=AuthenticationEndpointUtil.i18n(resourceBundle, "forgot.username.password.or")%>--%>
-<%--            <% } %>--%>
+            <%--            <%=AuthenticationEndpointUtil.i18n(resourceBundle, "forgot.username.password")%>--%>
+            <%--            <% if (!isIdentifierFirstLogin(inputType)) { %>--%>
+            <%--            <a--%>
+            <%--                id="usernameRecoverLink"--%>
+            <%--                tabindex="5"--%>
+            <%--                href="<%=StringEscapeUtils.escapeHtml4(getRecoverAccountUrl(identityMgtEndpointContext, urlEncodedURL, true, urlParameters))%>"--%>
+            <%--                data-testid="login-page-username-recovery-button"--%>
+            <%--            >--%>
+            <%--                <%=AuthenticationEndpointUtil.i18n(resourceBundle, "forgot.username")%>--%>
+            <%--            </a>--%>
+            <%--            <%=AuthenticationEndpointUtil.i18n(resourceBundle, "forgot.username.password.or")%>--%>
+            <%--            <% } %>--%>
             <a
-                id="passwordRecoverLink"
-                tabindex="6"
-                href="<%=StringEscapeUtils.escapeHtml4(getRecoverAccountUrl(identityMgtEndpointContext, urlEncodedURL, false, urlParameters))%>"
-                data-testid="login-page-password-recovery-button"
+                    id="passwordRecoverLink"
+                    tabindex="6"
+                    href="<%=StringEscapeUtils.escapeHtml4(getRecoverAccountUrl(identityMgtEndpointContext, urlEncodedURL, false, urlParameters))%>"
+                    data-testid="login-page-password-recovery-button"
             >
                 <%=AuthenticationEndpointUtil.i18n(resourceBundle, "forgot.password")%>
             </a>
@@ -347,13 +349,14 @@
     <div class="field">
         <div class="ui checkbox">
             <input
-                tabindex="3"
-                type="checkbox"
-                id="chkRemember"
-                name="chkRemember"
-                data-testid="login-page-remember-me-checkbox"
+                    tabindex="3"
+                    type="checkbox"
+                    id="chkRemember"
+                    name="chkRemember"
+                    data-testid="login-page-remember-me-checkbox"
             >
-            <label><%=AuthenticationEndpointUtil.i18n(resourceBundle, "remember.me")%></label>
+            <label><%=AuthenticationEndpointUtil.i18n(resourceBundle, "remember.me")%>
+            </label>
         </div>
     </div>
     <input type="hidden" name="sessionDataKey" value='<%=Encode.forHtmlAttribute
@@ -376,38 +379,38 @@
     <div class="ui divider hidden"></div>
 
     <div class="ui two column stackable grid">
-        <div class="column mobile center aligned tablet left aligned computer left aligned buttons tablet no-padding-left-first-child computer no-padding-left-first-child">
-<%--            <% if (isSelfSignUpEPAvailable && !isIdentifierFirstLogin(inputType)) { %>--%>
-<%--            <button--%>
-<%--                type="button"--%>
-<%--                onclick="window.location.href='<%=StringEscapeUtils.escapeHtml4(getRegistrationUrl(identityMgtEndpointContext, urlEncodedURL, urlParameters))%>';"--%>
-<%--                class="ui large button link-button"--%>
-<%--                id="registerLink"--%>
-<%--                tabindex="8"--%>
-<%--                role="button"--%>
-<%--                data-testid="login-page-create-account-button"--%>
-<%--            >--%>
-<%--                <%=StringEscapeUtils.escapeHtml4(AuthenticationEndpointUtil.i18n(resourceBundle, "create.account"))%>--%>
-<%--            </button>--%>
-<%--            <% } %>--%>
-        </div>
-        <div class="column mobile center aligned tablet right aligned computer right aligned buttons tablet no-margin-right-last-child computer no-margin-right-last-child">
+        <div class="column mobile center aligned tablet left aligned computer left aligned buttons tablet no-padding-left-first-child computer">
+            <%--            <% if (isSelfSignUpEPAvailable && !isIdentifierFirstLogin(inputType)) { %>--%>
+            <%--            <button--%>
+            <%--                type="button"--%>
+            <%--                onclick="window.location.href='<%=StringEscapeUtils.escapeHtml4(getRegistrationUrl(identityMgtEndpointContext, urlEncodedURL, urlParameters))%>';"--%>
+            <%--                class="ui large button link-button"--%>
+            <%--                id="registerLink"--%>
+            <%--                tabindex="8"--%>
+            <%--                role="button"--%>
+            <%--                data-testid="login-page-create-account-button"--%>
+            <%--            >--%>
+            <%--                <%=StringEscapeUtils.escapeHtml4(AuthenticationEndpointUtil.i18n(resourceBundle, "create.account"))%>--%>
+            <%--            </button>--%>
+            <%--            <% } %>--%>
             <button
                     type="button"
                     onclick="window.location.href='<%=getCdapUrl()%>';"
-                    class="ui large button link-button"
+                    class="ui secondary large button"
                     tabindex="8"
                     role="button"
                     data-testid="login-page-cdap-login-button"
             >
                 <%=StringEscapeUtils.escapeHtml4(AuthenticationEndpointUtil.i18n(resourceBundle, "login.cdap"))%>
             </button>
+        </div>
+        <div class="column mobile center aligned tablet right aligned computer right aligned buttons tablet no-margin-right-last-child computer no-margin-right-last-child">
             <button
-                type="submit"
-                class="ui primary large button"
-                tabindex="4"
-                role="button"
-                data-testid="login-page-continue-login-button"
+                    type="submit"
+                    class="ui primary large button"
+                    tabindex="4"
+                    role="button"
+                    data-testid="login-page-continue-login-button"
             >
                 <%=StringEscapeUtils.escapeHtml4(AuthenticationEndpointUtil.i18n(resourceBundle, "continue"))%>
             </button>
@@ -416,15 +419,13 @@
 
     <%!
         private String getRecoverAccountUrl(String identityMgtEndpointContext, String urlEncodedURL,
-                boolean isUsernameRecovery, String urlParameters) {
+                                            boolean isUsernameRecovery, String urlParameters) {
 
-            return identityMgtEndpointContext + ACCOUNT_RECOVERY_ENDPOINT_RECOVER + "?" + urlParameters
-                    + "&isUsernameRecovery=" + isUsernameRecovery + "&callback=" + Encode
-                    .forHtmlAttribute(urlEncodedURL);
+            return "https://dev.nise3.xyz/forget-password";
         }
 
         private String getRegistrationUrl(String identityMgtEndpointContext, String urlEncodedURL,
-                String urlParameters) {
+                                          String urlParameters) {
 
             return identityMgtEndpointContext + ACCOUNT_RECOVERY_ENDPOINT_REGISTER + "?"
                     + urlParameters + "&callback=" + Encode.forHtmlAttribute(urlEncodedURL);
