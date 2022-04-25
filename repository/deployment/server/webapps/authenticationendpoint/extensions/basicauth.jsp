@@ -396,7 +396,7 @@
             <button
                     type="button"
                     onclick="window.location.href='<%=getCdapUrl()%>';"
-                    class="ui secondary large button"
+                    class="ui primary large button"
                     tabindex="8"
                     role="button"
                     data-testid="login-page-cdap-login-button"
@@ -425,7 +425,7 @@
         }
 
         private String getRegistrationUrl(String identityMgtEndpointContext, String urlEncodedURL,
-                                          String urlParameters) {
+                                          String urlParameters) {`
 
             return identityMgtEndpointContext + ACCOUNT_RECOVERY_ENDPOINT_REGISTER + "?"
                     + urlParameters + "&callback=" + Encode.forHtmlAttribute(urlEncodedURL);
