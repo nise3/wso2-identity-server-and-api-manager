@@ -425,7 +425,7 @@
         }
 
         private String getRegistrationUrl(String identityMgtEndpointContext, String urlEncodedURL,
-                                          String urlParameters) {`
+                                          String urlParameters) {
 
             return identityMgtEndpointContext + ACCOUNT_RECOVERY_ENDPOINT_REGISTER + "?"
                     + urlParameters + "&callback=" + Encode.forHtmlAttribute(urlEncodedURL);
