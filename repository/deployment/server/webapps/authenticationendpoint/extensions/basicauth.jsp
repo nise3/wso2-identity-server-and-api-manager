@@ -421,7 +421,7 @@
         private String getRecoverAccountUrl(String identityMgtEndpointContext, String urlEncodedURL,
                                             boolean isUsernameRecovery, String urlParameters) {
 
-            return "https://dev.nise3.xyz/forget-password";
+            return "https://dev.nise3.xyz/forgot-password";
         }
 
         private String getRegistrationUrl(String identityMgtEndpointContext, String urlEncodedURL,
