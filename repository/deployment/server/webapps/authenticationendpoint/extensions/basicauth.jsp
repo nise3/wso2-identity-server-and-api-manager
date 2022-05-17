@@ -421,7 +421,20 @@
         private String getRecoverAccountUrl(String identityMgtEndpointContext, String urlEncodedURL,
                                             boolean isUsernameRecovery, String urlParameters) {
 
-            return "https://dev.nise3.xyz/forgot-password";
+            String url = identityMgtEndpointContext.split("//")[1];
+            String forgetpasswordUrl = "https://nise.asm/forgot-password";
+
+            if (url.contains("identity-dev.nise")) {
+                forgetpasswordUrl = "https://dev.nise3.xyz/forgot-password";
+            }
+            if (url.contains("identity-staging")) {
+                forgetpasswordUrl = "https://staging.nise3.xyz//forgot-password";
+            }
+            else if (url.contains("identity.nise")) {
+                forgetpasswordUrl = "https://nise.gov.bd/forgot-password";
+            }
+
+            return forgetpasswordUrl;
         }
 
         private String getRegistrationUrl(String identityMgtEndpointContext, String urlEncodedURL,
