@@ -395,7 +395,8 @@
             <%--            <% } %>--%>
             <button
                     type="button"
-                    onclick="window.location.href='<%=getCdapUrl()%>';"
+                    onclick="window.location.href='<%=getCdapUrl(identityMgtEndpointContext)%>';"
+                    style="<%=getCdapLoginButtonStyle(identityMgtEndpointContext)%>;"
                     class="ui primary large button"
                     tabindex="8"
                     role="button"
@@ -428,7 +429,7 @@
                 forgetpasswordUrl = "https://dev.nise3.xyz/forgot-password";
             }
             if (url.contains("identity-staging")) {
-                forgetpasswordUrl = "https://staging.nise3.xyz//forgot-password";
+                forgetpasswordUrl = "https://staging.nise3.xyz/forgot-password";
             }
             else if (url.contains("identity.nise")) {
                 forgetpasswordUrl = "https://nise.gov.bd/forgot-password";
@@ -444,9 +445,40 @@
                     + urlParameters + "&callback=" + Encode.forHtmlAttribute(urlEncodedURL);
         }
 
-        private String getCdapUrl() {
+        private String getCdapUrl(String identityMgtEndpointContext) {
 
-            return "https://identity-dev.nise3.xyz/oauth2/authorize/?response_type=id_token token&client_id=ATqvU8EKNKl6st6YjuUM0VNbQ1oa&scope=openid profile email&nonce=13e2312637dg136e1&redirect_uri=https://dev.nise3.xyz/callback";
+            String url = identityMgtEndpointContext.split("//")[1];
+            String cdapUrl = "https://identity-dev.nise3.xyz";
+
+            if (url.contains("identity-dev.nise")) {
+                cdapUrl = "https://identity-dev.nise3.xyz";
+            }
+            if (url.contains("identity-staging")) {
+                cdapUrl = "https://identity-staging.nise3.xyz";
+            }
+            else if (url.contains("identity.nise")) {
+                cdapUrl = "https://identity.nise.gov.bd";
+            }
+
+            return cdapUrl + "/oauth2/authorize/?response_type=id_token token&client_id=ATqvU8EKNKl6st6YjuUM0VNbQ1oa&scope=openid profile email&nonce=13e2312637dg136e1&redirect_uri=https://dev.nise3.xyz/callback";
+        }
+
+        private String getCdapLoginButtonStyle(String identityMgtEndpointContext) {
+
+            String url = identityMgtEndpointContext.split("//")[1];
+            String style = "opacity : 1";
+
+            if (url.contains("identity-dev.nise")) {
+                style = "opacity : 1";
+            }
+            if (url.contains("identity-staging")) {
+                style = "opacity : 0";
+            }
+            else if (url.contains("identity.nise")) {
+                style = "opacity : 0";
+            }
+
+            return style;
         }
 
     %>
